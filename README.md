@@ -22,9 +22,3 @@ Simple Tic Tac Toe game built with HTML, CSS, and JavaScript. Players take turns
 
 
 Open `index.html` in browser.
-
-## Possible Improvements (Optional)
-- Add a “Play vs Computer” mode (simple AI)
-- Add sound effects
-- Add a move history or restart confirmation
-
