@@ -58,3 +58,17 @@ button#resetBtn {
   cursor: pointer;
   font-weight: 700;
 }
+.scoreboard {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--muted);
+  margin: 15px 0;
+}
+
+.scoreboard span {
+  color: var(--text);
+  font-weight: 800;
+}
