@@ -16,3 +16,17 @@
   <script src="script.js" defer></script>
 </body>
 </html>
+<div class="scoreboard">
+  <div>X: <span id="scoreX">0</span></div>
+  <div>Draws: <span id="scoreD">0</span></div>
+  <div>O: <span id="scoreO">0</span></div>
+</div>
+.scoreboard {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--muted);
+}
+.scoreboard span { color: var(--text); font-weight: 800; }
