@@ -12,6 +12,7 @@ let board = Array(9).fill("");
 let currentPlayer = "X";
 let gameOver = false;
 
+// Create board cells
 for (let i = 0; i < 9; i++) {
   const btn = document.createElement("button");
   btn.className = "cell";
@@ -19,54 +20,76 @@ for (let i = 0; i < 9; i++) {
   boardEl.appendChild(btn);
 }
 
+// Handle cell clicks
 boardEl.addEventListener("click", (e) => {
   const cell = e.target.closest(".cell");
   if (!cell) return;
 
-  const index = Number(cell.dataset.index);
-  if (gameOver || board[index] !== "") return;
+  // Prevent moves if game is over or cell is already filled
+  if (gameOver || board[cell.dataset.index] !== "") return;
 
+  const index = Number(cell.dataset.index);
   board[index] = currentPlayer;
   cell.textContent = currentPlayer;
+  cell.classList.add("taken");
 
+  // Check for winner
   const winner = getWinner(board);
   if (winner) {
     gameOver = true;
     statusEl.textContent = `Player ${winner} wins!`;
-    disableBoard();
+    statusEl.classList.add("winner");
     return;
   }
 
+  // Check for draw
   if (board.every(v => v !== "")) {
     gameOver = true;
-    statusEl.textContent = "It’s a draw.";
+    statusEl.textContent = "It's a draw!";
+    statusEl.classList.add("draw");
     return;
   }
 
+  // Switch player
   currentPlayer = currentPlayer === "X" ? "O" : "X";
-  statusEl.textContent = `Player ${currentPlayer}’s turn`;
+  statusEl.textContent = `Player ${currentPlayer}'s turn`;
 });
 
+// Handle reset button
 resetBtn.addEventListener("click", resetGame);
 
+/**
+ * Check if there's a winner
+ * @param {Array} b - The board state
+ * @returns {string|null} - The winner ("X" or "O") or null
+ */
 function getWinner(b) {
-  for (const [a,c,d] of WIN_LINES) {
-    if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+  for (const [a, c, d] of WIN_LINES) {
+    if (b[a] && b[a] === b[c] && b[a] === b[d]) {
+      return b[a];
+    }
   }
   return null;
 }
 
-function disableBoard() {
-  document.querySelectorAll(".cell").forEach(c => c.disabled = true);
-}
-
+/**
+ * Reset the game to initial state
+ */
 function resetGame() {
   board = Array(9).fill("");
   currentPlayer = "X";
   gameOver = false;
-  document.querySelectorAll(".cell").forEach(c => {
-    c.textContent = "";
-    c.disabled = false;
+  
+  // Clear all cells
+  document.querySelectorAll(".cell").forEach(cell => {
+    cell.textContent = "";
+    cell.classList.remove("taken");
   });
-  statusEl.textContent = `Player ${currentPlayer}’s turn`;
+  
+  // Reset status
+  statusEl.textContent = `Player ${currentPlayer}'s turn`;
+  statusEl.classList.remove("winner", "draw");
 }
+
+// Initialize game status
+statusEl.textContent = `Player ${currentPlayer}'s turn`;
